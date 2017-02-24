@@ -17,7 +17,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
-
+    protected $primaryKey = 'id';
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -26,4 +26,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+    public function publish(Post $post)
+    {
+        $this->posts()->save($post);
+//        Post::create([
+//            'title' => request('title'),
+//            'body' => request('body'),
+//            'user_id' => auth()->id()
+//        ]);
+    }
 }
