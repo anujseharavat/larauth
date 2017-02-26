@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Queue\RedisQueue;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\Welcome;
 class RegistrationController extends Controller
 {
     public function create(){
@@ -31,6 +32,8 @@ class RegistrationController extends Controller
         //Sign them in
         //\Auth::login();
         auth()->login($user);
+
+        \Mail::to($user)->send(new Welcome($user));
 
         //return to view
         return redirect()->home();

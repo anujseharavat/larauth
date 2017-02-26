@@ -14,7 +14,7 @@ class PostsController extends Controller
     }
     //automatic dependency injection ....means passing argument
     public function index(Posts $posts){
-        dd($posts);
+        //dd($posts);
         //$posts = Post::orderBy('created_at', 'desc')->get();
         $posts = $posts->all();
         //$posts = (new \App\Repositories\Posts)->all();
