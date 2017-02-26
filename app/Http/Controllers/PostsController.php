@@ -5,19 +5,24 @@ use App\Post;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\Posts;
 
 class PostsController extends Controller
 {
     public function __construct(){
         $this->middleware('auth')->except(['index', 'show']);
     }
-    public function index(){
+    //automatic dependency injection ....means passing argument
+    public function index(Posts $posts){
+        dd($posts);
         //$posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = $posts->all();
+        //$posts = (new \App\Repositories\Posts)->all();
 
         //$posts = Post::latest()->get();
-        $posts = Post::latest()
+        /*$posts = Post::latest()
             ->filter(request(['month', 'year']))
-            ->get();
+            ->get();*/
 
         /*$archives = Post::archives();*/
         /*$archives = Post::selectRaw('year(created_at) year, monthname(created_at) month,count(*) published')
