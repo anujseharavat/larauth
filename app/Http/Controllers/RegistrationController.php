@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegistrationForm;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Queue\RedisQueue;
@@ -12,28 +13,13 @@ class RegistrationController extends Controller
     public function create(){
         return view('registration.create');
     }
-    public function store(){
-        //dd('in user store');
-        // validate form
-        $this->validate(request(),[
-           'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed'
-        ]);
+    public function store(RegistrationForm $request){
 
-        //save user
-        $user = User::create([
-            'name' => request('name'),
-            'email' => request('email'),
-            'password' => Hash::make(request('password'))
-        ]);
+        $request->persist();
 
-        //dump('user created');
-        //Sign them in
-        //\Auth::login();
-        auth()->login($user);
-
-        \Mail::to($user)->send(new Welcome($user));
+        //$request->session();
+        session('message','this is details message');
+        session()->flash('message', 'thanks so much for signup');
 
         //return to view
         return redirect()->home();

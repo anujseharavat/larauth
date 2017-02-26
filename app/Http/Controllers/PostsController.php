@@ -14,6 +14,7 @@ class PostsController extends Controller
     }
     //automatic dependency injection ....means passing argument
     public function index(Posts $posts){
+        //return session('message');
         //dd($posts);
         //$posts = Post::orderBy('created_at', 'desc')->get();
         $posts = $posts->all();
@@ -65,6 +66,9 @@ class PostsController extends Controller
             'title' => request('title'),
             'body' => request('body')
         ]);*/
+        session()->flash('message','you post has now been published');
+
+        //flash('Your Message here ');
 
         return redirect('/');
         //dd(request(['title', 'body']));
